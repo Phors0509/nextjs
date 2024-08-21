@@ -22,8 +22,17 @@ jobs:
             - name: Install dependencies
               run: yarn install
 
+            - name: Start Storybook in the background
+              run: yarn storybook --port 6006 --ci & # Start Storybook in the background on port 6006
+
+            - name: Wait for Storybook to be ready
+              run: npx wait-on http://localhost:6006 # Wait for Storybook to be fully up
+
             - name: Run Storybook tests with coverage
-              run: yarn test-storybook # Run Storybook tests and generate coverage reports
+              run: yarn test-storybook # Run Storybook tests
+
+            - name: Kill Storybook process
+              run: kill $(lsof -t -i:6006) # Kill Storybook process running on port 6006
 
     deploy:
         runs-on: ubuntu-latest
