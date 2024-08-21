@@ -43,7 +43,7 @@ export const Button = ({
                 "storybook-button",
                 `storybook-button--${size}`,
                 mode,
-            ].join(" ")}
+            ].join("bg-blue-500")}
             {...props}
         >
             {label}
