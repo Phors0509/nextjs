@@ -30,8 +30,8 @@ const RequiredTest = () => {
 
     return (
         <>
-            {/* <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <form>
+                {/* <div>
                 <input {...register("email")} placeholder="email" />
                 <p>{errors.email?.message}</p>
             </div>
@@ -43,8 +43,8 @@ const RequiredTest = () => {
                     />
                 <p>{errors.password?.message}</p>
             </div>
-            <button type="submit">Submit</button>
-        </form> */}
+            <button type="submit">Submit</button> */}
+            </form>
         </>
     );
 };
