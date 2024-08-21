@@ -22,17 +22,20 @@ jobs:
             - name: Install dependencies
               run: yarn install
 
+            - name: Install Playwright browsers
+              run: yarn playwright install # Install the required Playwright browsers
+
             - name: Start Storybook in the background
-              run: yarn storybook --port 6006 --ci & # Start Storybook in the background on port 6006
+              run: yarn storybook --port 6006 --ci &
 
             - name: Wait for Storybook to be ready
-              run: npx wait-on http://localhost:6006 # Wait for Storybook to be fully up
+              run: npx wait-on http://localhost:6006
 
             - name: Run Storybook tests with coverage
-              run: yarn test-storybook # Run Storybook tests
+              run: yarn test-storybook
 
             - name: Kill Storybook process
-              run: kill $(lsof -t -i:6006) # Kill Storybook process running on port 6006
+              run: kill $(lsof -t -i:6006)
 
     deploy:
         runs-on: ubuntu-latest
