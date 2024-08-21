@@ -1,103 +1,52 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
+import { Button } from "./requiredTest";
 
-import { userEvent, within } from "@storybook/test";
-
-import RequiredTest from "./requiredTest";
-
-const meta: Meta<typeof RequiredTest> = {
-    component: RequiredTest,
+// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+const meta = {
+    title: "Example/Button",
+    component: Button,
+    parameters: {
+        // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
+        layout: "centered",
+    },
+    // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
     tags: ["autodocs"],
-};
+    // More on argTypes: https://storybook.js.org/docs/api/argtypes
+    argTypes: {
+        backgroundColor: { control: "color" },
+    },
+    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+    args: { onClick: fn() },
+} satisfies Meta<typeof Button>;
 
 export default meta;
-type Story = StoryObj<typeof RequiredTest>;
+type Story = StoryObj<typeof meta>;
 
-export const FilledForm: Story = {
-    play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-
-        const emailInput = canvas.getByPlaceholderText("email");
-
-        await userEvent.type(emailInput, "example-email@email.com", {
-            delay: 100,
-        });
-
-        const passwordInput = canvas.getByPlaceholderText("password");
-
-        await userEvent.type(passwordInput, "ExamplePassword", {
-            delay: 100,
-        });
-        const submitButton = canvas.getByRole("button");
-
-        await userEvent.click(submitButton);
+// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+export const Primary: Story = {
+    args: {
+        primary: true,
+        label: "Button",
     },
 };
 
-export const EmptyForm: Story = {
-    play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-
-        const submitButton = canvas.getByRole("button");
-
-        await userEvent.click(submitButton);
+export const Secondary: Story = {
+    args: {
+        label: "Button",
     },
 };
 
-export const InvalidEmail: Story = {
-    play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-
-        const emailInput = canvas.getByPlaceholderText("email");
-
-        await userEvent.type(emailInput, "example-email", {
-            delay: 100,
-        });
-
-        const passwordInput = canvas.getByPlaceholderText("password");
-
-        await userEvent.type(passwordInput, "ExamplePassword", {
-            delay: 100,
-        });
-        const submitButton = canvas.getByRole("button");
-
-        await userEvent.click(submitButton);
+export const Large: Story = {
+    args: {
+        size: "large",
+        label: "Button",
     },
 };
 
-export const InvalidPassword: Story = {
-    play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-
-        const emailInput = canvas.getByPlaceholderText("email");
-        await userEvent.type(emailInput, "example-email@email.com", {
-            delay: 100,
-        });
-
-        const passwordInput = canvas.getByPlaceholderText("password");
-        await userEvent.type(passwordInput, "Exame", {
-            delay: 100,
-        });
-        const submitButton = canvas.getByRole("button");
-
-        await userEvent.click(submitButton);
-    },
-};
-
-export const InvalidEmailAndPassword: Story = {
-    play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-
-        const emailInput = canvas.getByPlaceholderText("email");
-        await userEvent.type(emailInput, "example-email", {
-            delay: 100,
-        });
-
-        const passwordInput = canvas.getByPlaceholderText("password");
-        await userEvent.type(passwordInput, "Exame", {
-            delay: 100,
-        });
-        const submitButton = canvas.getByRole("button");
-
-        await userEvent.click(submitButton);
+export const Small: Story = {
+    args: {
+        size: "small",
+        label: "Button",
     },
 };

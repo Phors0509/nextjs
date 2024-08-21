@@ -1,52 +1,57 @@
-"use client";
 import React from "react";
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
 
-// const schema = yup.object().shape({
-//     email: yup
-//         .string()
-//         .email("Invalid email format")
-//         .required("Email is required"),
-//     password: yup
-//         .string()
-//         .min(6, "Password must be at least 6 characters")
-//         .required("Password is required"),
-// });
+export interface ButtonProps {
+    /**
+     * Is this the principal call to action on the page?
+     */
+    primary?: boolean;
+    /**
+     * What background color to use
+     */
+    backgroundColor?: string;
+    /**
+     * How large should the button be?
+     */
+    size?: "small" | "medium" | "large";
+    /**
+     * Button contents
+     */
+    label: string;
+    /**
+     * Optional click handler
+     */
+    onClick?: () => void;
+}
 
-const RequiredTest = () => {
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState: { errors },
-    // } = useForm({
-    //     resolver: yupResolver(schema),
-    // });
-
-    // const onSubmit = (data: any) => {
-    //     console.log(data);
-    // };
-
+/**
+ * Primary UI component for user interaction
+ */
+export const Button = ({
+    primary = false,
+    size = "medium",
+    backgroundColor,
+    label,
+    ...props
+}: ButtonProps) => {
+    const mode = primary
+        ? "storybook-button--primary"
+        : "storybook-button--secondary";
     return (
-        <>
-            <form>
-                {/* <div>
-                <input {...register("email")} placeholder="email" />
-                <p>{errors.email?.message}</p>
-            </div>
-            <div>
-                <input
-                    type="password"
-                    {...register("password")}
-                    placeholder="password"
-                    />
-                <p>{errors.password?.message}</p>
-            </div>
-            <button type="submit">Submit</button> */}
-            </form>
-        </>
+        <button
+            type="button"
+            className={[
+                "storybook-button",
+                `storybook-button--${size}`,
+                mode,
+            ].join(" ")}
+            {...props}
+        >
+            {label}
+            <style jsx>{`
+                button {
+                    background-color: ${backgroundColor};
+                }
+            `}</style>
+        </button>
     );
 };
-
-export default RequiredTest;
