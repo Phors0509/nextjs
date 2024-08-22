@@ -30,13 +30,6 @@ jobs:
                   yarn storybook --ci --port 6006 &
                   sleep 15 # Wait for Storybook to start
 
-            - name: Verify coverage report exists
-              run: |
-                  if [ ! -f ./coverage/coverage-summary.json ]; then
-                    echo "Coverage report not found!"
-                    exit 1
-                  fi
-
             - name: Run tests with coverage
               run: yarn test-storybook --coverage
 
